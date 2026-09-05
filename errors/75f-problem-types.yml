@@ -1,0 +1,125 @@
+generated: '2026-09-05'
+method: searched
+source: https://support.75f.io/hc/en-us/articles/5460365803027-75F-API-s-Error-Returns
+format: mixed
+note: >-
+  75F does not use RFC 9457 application/problem+json. Two distinct error envelopes are in play and the
+  boundary matters to a client: the Azure API Management gateway answers with a JSON object carrying
+  statusCode + message, while the 75F Haystack backend answers with a Haystack error grid (ver:"3.0"
+  followed by an err marker and a dis string) in JSON or ZINC depending on the Accept header. The v2
+  Special Schedules API returns a third, plain JSON shape with a status field. Captured verbatim from
+  the provider's published error reference; nothing here is inferred.
+envelopes:
+- id: apim-gateway
+  layer: Azure API Management gateway
+  content_type: application/json
+  shape: '{ "statusCode": <int>, "message": "<string>" }'
+- id: haystack-grid
+  layer: 75F Haystack backend
+  content_type: [application/json, text/zinc]
+  shape: 'ver:"3.0" err dis:"<message>" empty'
+- id: schedules-v2
+  layer: 75F v2 Special Schedules API
+  content_type: application/json
+  shape: '{ "status": "<string>", "scheduleId": "<string>" } on success; a code/message pair on error'
+problems:
+- status: 401
+  envelope: apim-gateway
+  title: Missing subscription key
+  message: >-
+    Access denied due to missing subscription key. Make sure to include a subscription key when making
+    requests to an API.
+  remediation: Send the product-scoped Ocp-Apim-Subscription-Key header.
+  observed: true
+  observed_at: https://api.75f.io/ph/read?filter=site
+- status: 401
+  envelope: apim-gateway
+  title: Invalid subscription key
+  message: >-
+    Access denied due to invalid subscription key. Make sure to provide a valid key for an active
+    subscription.
+  remediation: Use a key from an approved, active product subscription; rotate to the secondary key.
+- status: 401
+  envelope: none
+  title: Invalid CCU token
+  message: ''
+  remediation: >-
+    Re-mint the OAuth bearer token at /oauth/token. This 401 carries NO response body, which is the
+    signal distinguishing a bad bearer token from a bad subscription key.
+- status: 200
+  envelope: haystack-grid
+  title: Permission-filtered empty result
+  message: 'ver:"3.0" hisStart:<ts> hisEnd:<ts> empty'
+  remediation: >-
+    Requesting data for points the caller has no permission to returns 200 with an empty grid, not 403.
+    A client must treat an empty grid as a possible authorization outcome, not only as "no data".
+  source_operation: hisReadMany
+- status: 404
+  envelope: apim-gateway
+  title: Resource not found
+  message: Resource not found
+  remediation: Check the gateway path prefix and the operation name.
+  observed: true
+  observed_at: https://api.75f.io/openapi.json
+- status: 404
+  envelope: haystack-grid
+  title: Requested entity not found
+  message: 'ver:"3.0" err dis:"Requested entity not found" empty'
+  remediation: A /read that matches no entities returns 404 plus an error grid.
+  source_operation: read
+- status: 400
+  envelope: haystack-grid
+  title: Invalid filter
+  message: 'ver:"3.0" err dis:"Invalid filter: <expr>" empty'
+  remediation: Correct the Haystack filter expression; see the Haystack Filters & Queries reference.
+  source_operation: read
+- status: 414
+  envelope: html
+  title: Request URL Too Long
+  message: HTTP Error 414. The requested URL is too long.
+  remediation: >-
+    hisReadMany passes point ids in the query string; batch large id lists into multiple requests. The
+    414 response is HTML, not JSON or ZINC — a client parsing on content-type must handle it.
+  source_operation: hisReadMany
+- status: 400
+  envelope: schedules-v2
+  title: Invalid time range
+  message: 'Special Schedule : Invalid time range'
+  remediation: startTime must be before endTime.
+  source_operation: POST /v2/schedules/special
+- status: 409
+  envelope: schedules-v2
+  title: Conflicting special schedule exists
+  message: 'Special Schedule : Schedule already exists for this date and zone'
+  remediation: A zone may not hold two overlapping special schedules on the same date.
+  source_operation: POST /v2/schedules/special
+- status: 403
+  envelope: schedules-v2
+  title: Unauthorized to modify zone schedules
+  message: 'Special Schedule : Unauthorized to modify zone schedules'
+  remediation: The caller must hold Secondary Manager rights on the zone's site.
+  source_operation: POST /v2/schedules/special
+- status: 422
+  envelope: schedules-v2
+  title: Missing required fields
+  message: 'Special Schedule : Missing required fields'
+  remediation: date, startTime, endTime and mode are required.
+  source_operation: POST /v2/schedules/special
+- status: 404
+  envelope: schedules-v2
+  title: Schedule not found
+  message: Schedule not found
+  remediation: The scheduleId does not exist or is not visible to the caller.
+  source_operation: PUT /v2/schedules/special/{scheduleId}
+- status: 400
+  envelope: schedules-v2
+  title: Schedule time conflict on update
+  message: New times conflict with another schedule
+  remediation: Choose a window that does not overlap an existing special schedule on the same zone/date.
+  source_operation: PUT /v2/schedules/special/{scheduleId}
+- status: 403
+  envelope: schedules-v2
+  title: Unauthorized to delete this schedule
+  message: Unauthorized to delete this schedule
+  remediation: The caller must hold Secondary Manager rights on the zone's site.
+  source_operation: DELETE /v2/schedules/special/{scheduleId}

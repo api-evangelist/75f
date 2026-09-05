@@ -1,0 +1,121 @@
+generated: '2026-09-05'
+method: searched
+source: https://support.75f.io/hc/en-us/sections/5484889695123-API-s-for-Integrations
+note: >-
+  Cross-cutting request/response semantics read from 75F's published API documentation. 75F publishes no
+  public OpenAPI, so nothing here is derived from a spec; every statement traces to a docs URL and any
+  gap is recorded as a gap rather than filled in.
+authentication:
+  style: two-credential — Ocp-Apim-Subscription-Key (Azure APIM product key) plus OAuth 2.0 Bearer JWT
+  detail: authentication/75f-authentication.yml
+content_negotiation:
+  request_content_types: [application/x-www-form-urlencoded, application/json]
+  response_content_types: [application/json, text/zinc]
+  mechanism: >-
+    The Accept header selects the Haystack grid serialization. Accept text/zinc returns ZINC; the
+    default JSON response carries a metadata.ver "3.0" object plus cols[] and rows[].
+  source: https://support.75f.io/hc/en-us/articles/5460365803027-75F-API-s-Error-Returns
+data_model:
+  standard: Project Haystack 3.0
+  detail: >-
+    Requests and responses are Haystack grids. Entities are addressed by Ref ids prefixed with @ in
+    requests and returned as "r:<uuid>" in JSON responses; marker tags serialize as "m:". Queries are
+    Haystack filter expressions over tags (for example "point and siteRef==@<id>").
+  reference: https://support.75f.io/hc/en-us/articles/6477813004691-Haystack-Filters-Queries
+pagination:
+  style: none-documented
+  detail: >-
+    /read accepts an optional `limit` column bounding the number of entities returned. No cursor, page
+    or offset parameter is documented and no next-link is returned, so a client cannot resume a
+    truncated result set. hisReadMany is bounded by an explicit `range` instead.
+  parameters: [limit, range]
+  response_fields: []
+idempotency:
+  coverage: none
+  supported: false
+  header: null
+  detail: >-
+    No idempotency key, request-id de-duplication or replay-protection mechanism is documented anywhere
+    in the 75F API reference. pointWrite is naturally last-write-wins into a Haystack priority array, so
+    a repeated identical write converges, but a repeated hisWriteMany or a repeated POST
+    /v2/schedules/special is not protected — the latter is instead rejected with 409 on conflict, which
+    is a validation guard, not idempotency.
+  evidence: >-
+    A keyword sweep of all 591 published 75F help-center articles returned zero occurrences of
+    idempotency, Idempotency-Key or replay.
+reversibility:
+  grade: documented
+  detail: >-
+    Every documented write surface has a reversal path, but 75F states no time window on any of them, so
+    this grades `documented` rather than `verified`. Do not infer a window: none is published.
+  surfaces:
+  - write: POST /v2/schedules/special
+    reversal: DELETE /v2/schedules/special/{scheduleId}
+    window: null
+    window_source: null
+    note: >-
+      Deletion is documented and returns {"status":"deleted"}. No retention or cut-off window is stated,
+      and the docs do not say whether a schedule may be deleted after it has begun executing.
+    docs: https://support.75f.io/hc/en-us/articles/45325600917651-Special-Schedules-Via-API
+  - write: PUT /v2/schedules/special/{scheduleId}
+    reversal: PUT with the prior field values
+    window: null
+    window_source: null
+    note: Update is a full replacement of the modified fields; restoring prior values is the only undo.
+    docs: https://support.75f.io/hc/en-us/articles/45325600917651-Special-Schedules-Via-API
+  - write: POST /ph/rw/pointWrite
+    reversal: a further pointWrite at the same priority level, or a null write to release the level
+    window: null
+    window_source: null
+    note: >-
+      Writes land in a Haystack priority array and the response returns the resulting array state, so a
+      caller can read back the level it occupies and overwrite or release it. 75F documents that the
+      priority-array state is returned rather than an empty grid, which is what makes the reversal
+      observable. No sunset or auto-release duration is published.
+    docs: https://support.75f.io/hc/en-us/articles/6012128424851-PointWrite-API
+  - write: POST /ph/rw/hisWriteMany
+    reversal: null
+    window: null
+    window_source: null
+    note: >-
+      No documented delete or correction operation for historized values. Writing a corrected value at
+      the same timestamp is the only documented recourse and the docs do not state that it supersedes
+      the earlier value.
+    docs: https://support.75f.io/hc/en-us/articles/6011449449619-HisWrite-Many-API
+dry_run_mode:
+  supported: false
+  detail: >-
+    No dry-run, validate-only or preview parameter is documented on any write operation. The Facilisight
+    "API Trial" console and the developer portal "Try it" pane execute real calls against the selected
+    environment; the separate QA and staging gateway prefixes are the only rehearsal surface.
+  related: sandbox/75f-sandbox.yml
+write_safety:
+  detail: >-
+    Only points carrying the Haystack `writable` tag can be written. Relays, analog outputs and direct
+    physical components are not addressable, and some physical outcomes require writing several config
+    points rather than one control point (for example a VAV damper is moved by overriding the damper
+    min/max config points, not damperPosition).
+  source: https://support.75f.io/hc/en-us/articles/16957089801107-FAQ-What-points-can-I-control-with-the-75F-API
+versioning:
+  scheme: uri-path
+  detail: >-
+    Two coexisting shapes. The Haystack surface is unversioned in the path (/ph/...) and 75F states an
+    intent to stay backward compatible with previous API versions. The Special Schedules surface is
+    explicitly versioned (/v2/schedules/special). The QA and staging gateways additionally carry an
+    environment prefix (/qa/, /staging/) and one documented example shows /qa/api/v1/oauth/token.
+  current: {haystack: unversioned, schedules: v2}
+  detail_artifact: lifecycle/75f-lifecycle.yml
+request_tracing:
+  request_id_header: null
+  detail: No request-id or correlation-id header is documented on requests or responses.
+rate_limit_signaling:
+  headers: []
+  detail: >-
+    No RateLimit-*, X-RateLimit-* or Retry-After headers are documented, and no numeric limit is
+    published. Azure API Management is capable of enforcing per-subscription quotas and 75F states that
+    API consumption is metered per site for reporting and billing, but the limits themselves are not
+    published to integrators.
+  detail_artifact: rate-limits/75f-rate-limits.yml
+error_envelope:
+  detail: Three envelopes — APIM gateway JSON, Haystack error grid, and v2 schedules JSON.
+  detail_artifact: errors/75f-problem-types.yml

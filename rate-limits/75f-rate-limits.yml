@@ -1,0 +1,30 @@
+generated: '2026-09-05'
+method: searched
+source: https://support.75f.io/hc/en-us/sections/5484889695123-API-s-for-Integrations
+limit_count: 0
+note: >-
+  75F publishes no numeric rate limit, quota or throttle for any API. A keyword sweep of all 591 public
+  help-center articles returned zero occurrences of "rate limit", "throttle", "quota" or "429", and the
+  published error reference — which enumerates 400, 401, 404 and 414 — does not list a 429 at all. The
+  only volume figure 75F publishes is a scale claim, "over 16 million API [calls] processed in a month",
+  which is a throughput boast rather than a consumer-facing limit. An honest zero.
+headers: []
+response_headers_documented: false
+exhaustion_status_code: null
+limits: []
+inferred_controls:
+  detail: >-
+    The API is fronted by Azure API Management with per-product subscription keys, and 75F meters
+    consumption per site for reporting and billing, so per-subscription quota enforcement is available to
+    the platform. Whether any quota is actually configured, and at what value, is not published — so
+    nothing is recorded as a limit here.
+  source: https://support.75f.io/hc/en-us/articles/54874674979603-API-Management-Via-Facilisight-Application
+practical_constraints:
+- constraint: URL length on hisReadMany
+  detail: >-
+    Point ids are passed in the query string, and an over-long URL returns HTTP 414 with an HTML body.
+    This is the one documented request-size ceiling and it forces clients to batch large id lists.
+  source: https://support.75f.io/hc/en-us/articles/5460365803027-75F-API-s-Error-Returns
+- constraint: token lifetime
+  detail: Bearer tokens carry expires_in 3600; client application credentials expire within 24 hours.
+  source: https://support.75f.io/hc/en-us/articles/5459701361427-Oauth-API

@@ -1,0 +1,39 @@
+generated: '2026-09-05'
+method: searched
+source: https://www.75f.io/software/api/
+plan_count: 0
+currency: null
+note: >-
+  75F publishes no pricing page and no API plan tiers. www.75f.io/pricing returns 404; the API page ends
+  in a "Start Your Integration Today — Contact Us" call to action, and the site's only self-service
+  commercial tool is an ROI calculator. The API itself is documented as a subscription-based add-on:
+  "API Management is available as a subscription-based add-on. The feature must be enabled through the
+  applicable subscription process before its capabilities become available." Price is not stated.
+gating:
+  model: enterprise, contact-sales
+  api_access_requires:
+  - an active 75F deployment and a Facilisight account
+  - a Secondary Manager role on each site to be read or written
+  - an approved product subscription in the Azure API Management developer portal
+  - the API Management add-on subscription for the Facilisight-side key management and API Trial surface
+  contact: https://www.75f.io/contact/
+metering:
+  metered: true
+  detail: >-
+    API consumption is tracked per site by API type and surfaced in Facilisight under API Management >
+    API Usage with a date-range selector; 75F states consumption "is also tracked as part of the APIM
+    workflow for reporting and billing purposes." No published rate card converts that usage into a price.
+  source: https://support.75f.io/hc/en-us/articles/54874674979603-API-Management-Via-Facilisight-Application
+products:
+- name: Read API
+  description: Subscription product granting keys for retrieving information from the 75F platform.
+  price: null
+- name: Write API
+  description: Subscription product granting keys for modifying or writing information to the platform.
+  price: null
+- name: Special Schedule API
+  description: Subscription product granting keys for schedule-related operations.
+  price: null
+evidence:
+- {url: 'https://www.75f.io/pricing', status: 404}
+- {url: 'https://www.75f.io/software/api/', status: 200}

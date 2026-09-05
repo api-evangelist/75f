@@ -1,0 +1,56 @@
+generated: '2026-09-05'
+method: searched
+source: https://support.75f.io/hc/en-us/categories/11037028410771-Feature-Release-History
+docs: https://support.75f.io/hc/en-us/categories/11037028410771-Feature-Release-History
+scheme:
+  style: dated monthly release notes, one article per month, grouped by year
+  years_published: ['2022', '2023', '2024', '2025', '2026']
+  versioned_components: >-
+    Each release note closes with a "Software Release Versions" table naming minimum versions for CCU,
+    Home App, Remote Access and related components — the platform is versioned per component rather
+    than as a single API version.
+  note: >-
+    This is a product release history covering the whole 75F platform (devices, CCU firmware, Facilisight
+    web and mobile, portals) rather than an API-only changelog. API changes appear inside it — the
+    Special Schedules API and the Facilisight API Management surface both landed this way — but there is
+    no separate API change feed and no breaking-change flag.
+entries:
+- version: July 2026 Release
+  date: '2026-07-27'
+  url: https://support.75f.io/hc/en-us/articles/53825788018195-July-2026-Release
+  breaking: unknown
+  highlights:
+  - Temperature Modes — configurable temperature interaction modes across CCU, portals, occupant apps and supported devices
+  - Temperature Mode Simulator for validating temperature control configurations before applying them to a zone schedule
+- version: June 2026 Release
+  date: '2026-06-30'
+  url: https://support.75f.io/hc/en-us/articles/53034682047635-June-2026-Release
+  breaking: unknown
+  highlights:
+  - Saffron AI unified chat interface embedded across the platform
+  - Bulk application of Special Schedules at organisation and zone level, with search, sorting, pagination and validation rules
+  - Bulk Vacations application
+  - Announcement management
+- version: May 2026 Release
+  date: '2026-05-27'
+  url: https://support.75f.io/hc/en-us/articles/52059170926483-May-2026-Release
+  breaking: unknown
+  highlights:
+  - "Energy Intelligence as first-class data — a unified framework standardising how energy consumption is detected, calculated, normalised, retained and exposed across equipment profiles"
+  - Unified CCU scheduling execution framework covering recurring, special, shared vacation and building schedules across online, offline and standalone modes
+- version: April 2026 Release
+  date: '2026-05-04'
+  url: https://support.75f.io/hc/en-us/articles/51384795821331-April-2026-Release
+  breaking: unknown
+- version: March 2026 Release
+  date: '2026-03-24'
+  url: https://support.75f.io/hc/en-us/articles/50194555738259-March-2026-Release
+  breaking: unknown
+- version: February 2026 Release
+  date: '2026-03-03'
+  url: https://support.75f.io/hc/en-us/articles/49583062149395-February-2026-Release
+  breaking: unknown
+- version: January 2026 Release
+  date: '2026-01-30'
+  url: https://support.75f.io/hc/en-us/articles/48668686760723-January-2026-Release
+  breaking: unknown

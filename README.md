@@ -64,5 +64,14 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-75F is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/75f_stock/
+75F is an IoT-based building management and automation company (Burnsville, Minnesota; acquired by Carrier Global in July 2026). Its platform pairs wireless sensors, thermostats and Central Control Units with cloud software — Facilisight, Portfolio Analytics, Hayloft and Saffron AI — to control and optimize HVAC, lighting and equipment in commercial buildings.
+
+The developer surface is a Project Haystack 3.0 REST API behind an Azure API Management gateway at `api.75f.io` (Haystack `read`, `hisReadMany`, `pointWrite`, `hisWriteMany` over JSON or ZINC grids), plus a versioned `v2` Special Schedules API for exception-based occupancy overrides. Access requires two credentials — a product-scoped APIM subscription key and an OAuth 2.0 client-credentials bearer token — plus a Facilisight *Secondary Manager* grant on every site in scope. Integrators also reach the system over BACnet IP/MS-TP, Modbus and a Tridium Niagara driver.
+
+75F documents this API thoroughly in prose but publishes **no public machine-readable contract**: the OpenAPI 3.0 document behind the Facilisight API Trial and the APIM developer portal is reachable only after portal registration and product-subscription approval.
+
+- Website: https://www.75f.io/
+- API overview: https://www.75f.io/software/api/
+- API documentation: https://support.75f.io/hc/en-us/sections/5484889695123-API-s-for-Integrations
+- Developer portal: https://api-management-75f-dev.developer.azure-api.net/
+- Status: https://75f.statuspage.io/

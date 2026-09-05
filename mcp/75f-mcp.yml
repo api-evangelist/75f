@@ -1,0 +1,81 @@
+generated: '2026-09-05'
+method: derived
+status: candidate
+source: https://support.75f.io/hc/en-us/sections/5484889695123-API-s-for-Integrations
+note: >-
+  75F ships NO MCP server. This is a candidate tool shape derived from the operations 75F actually
+  documents, offered as a starting point for anyone building one — it is not a claim that 75F publishes
+  an agent surface. apis.yml therefore carries type X-MCPServerCandidate, not MCPServer. A search of all
+  591 public 75F help-center articles returned zero mentions of MCP or Model Context Protocol, and
+  https://api.75f.io/mcp returns the gateway's 404 envelope (probed 2026-09-05).
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: derived
+server:
+  name: 75f
+  transport: null
+  url: null
+tools:
+- name: read_entities
+  description: >-
+    Read Haystack entity records by filter expression or by id. Returns a Haystack grid of matching
+    entities with their tags.
+  source_operation: 'GET https://api.75f.io/ph/read?filter=<haystack-filter>[&limit=<n>]'
+  docs: https://support.75f.io/hc/en-us/articles/5460066903827-Read-API
+  consequence: read
+- name: read_history_many
+  description: >-
+    Read time-series history for one or more historized points over a date or date-time range. Returns
+    timestamp/value pairs per point in the point's configured timezone.
+  source_operation: 'GET https://api.75f.io/ph/hisReadMany?ids=@<id>,@<id>&range=<range>'
+  docs: https://support.75f.io/hc/en-us/articles/5460179115923-HisReadMany-API
+  consequence: read
+- name: write_point
+  description: >-
+    Write a value to a writable point at a given priority level. Returns the resulting priority array.
+    Only points carrying the Haystack `writable` tag are addressable.
+  source_operation: 'POST https://api.75f.io/ph/rw/pointWrite'
+  docs: https://support.75f.io/hc/en-us/articles/6012128424851-PointWrite-API
+  consequence: physical
+  note: This changes the behaviour of real HVAC equipment in an occupied building.
+- name: write_history_many
+  description: Write timestamped values for multiple points in a single request.
+  source_operation: 'POST https://api.75f.io/ph/rw/hisWriteMany'
+  docs: https://support.75f.io/hc/en-us/articles/6011449449619-HisWrite-Many-API
+  consequence: write
+- name: create_special_schedule
+  description: >-
+    Create an exception-based schedule on a zone — date, start/end time, occupancy mode and optional
+    heating/cooling setpoints.
+  source_operation: 'POST https://api.75f.io/v2/schedules/special'
+  docs: https://support.75f.io/hc/en-us/articles/45325600917651-Special-Schedules-Via-API
+  consequence: physical
+  scopes: [schedules:write]
+- name: update_special_schedule
+  description: Update an existing special schedule by id.
+  source_operation: 'PUT https://api.75f.io/v2/schedules/special/{scheduleId}'
+  docs: https://support.75f.io/hc/en-us/articles/45325600917651-Special-Schedules-Via-API
+  consequence: physical
+  scopes: [schedules:write]
+- name: delete_special_schedule
+  description: Delete a special schedule by id. This is the documented reversal for create.
+  source_operation: 'DELETE https://api.75f.io/v2/schedules/special/{scheduleId}'
+  docs: https://support.75f.io/hc/en-us/articles/45325600917651-Special-Schedules-Via-API
+  consequence: physical
+  scopes: [schedules:write]
+input_schemas:
+  available: false
+  reason: >-
+    75F publishes no public OpenAPI, so no tool here can inherit a real inputSchema. Building a working
+    server requires the OpenAPI 3.0 document behind the Facilisight API Trial or the APIM developer
+    portal, which needs an authenticated, subscribed account.
+auth_model:
+  detail: >-
+    Any server would need two credentials per call — a product-scoped Ocp-Apim-Subscription-Key and an
+    OAuth 2.0 bearer token minted from Facilisight account credentials — and the calling account must
+    hold Secondary Manager rights on every site in scope.
+  detail_artifact: authentication/75f-authentication.yml

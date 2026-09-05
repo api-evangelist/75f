@@ -1,0 +1,22 @@
+generated: '2026-09-05'
+method: generated
+source: https://support.75f.io/hc/en-us/sections/5484889695123-API-s-for-Integrations
+note: >-
+  75F publishes no OpenAPI and no AGENTS.md or provider-authored skill files. These skills are grounded
+  in the HTTP method + path + headers + error strings that 75F publishes verbatim in its help center;
+  no operationId is invented because none exists to invent from.
+skills:
+- file: 75f-read-building-data.md
+  name: Read 75F building data over the Haystack API
+  api: https://api.75f.io/ph
+  operations: [POST /oauth/token, GET /ph/read, GET /ph/hisReadMany]
+- file: 75f-write-points-and-schedules.md
+  name: Change 75F building behaviour — point writes and special schedules
+  api: https://api.75f.io
+  operations:
+  - POST /oauth/token
+  - GET /ph/read
+  - POST /ph/rw/pointWrite
+  - POST /v2/schedules/special
+  - PUT /v2/schedules/special/{scheduleId}
+  - DELETE /v2/schedules/special/{scheduleId}

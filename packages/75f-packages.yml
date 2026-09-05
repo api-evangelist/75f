@@ -1,0 +1,24 @@
+generated: '2026-09-05'
+method: searched
+source: registry probes + https://www.75f.io/software/api/
+package_count: 0
+official_sdk_count: 0
+packages: []
+note: >-
+  75F ships no first-party client library. npm, PyPI, RubyGems, crates.io, NuGet, Maven Central,
+  Packagist and pkg.go.dev were probed for 75F-published packages and none exists; the developer
+  documentation never references an SDK, and the only client tooling 75F offers is a Postman collection
+  reproduced inline in the "Payload Examples using API's" article plus the browser "Try it" pane in the
+  Azure API Management developer portal and the Swagger-powered API Trial inside Facilisight. No SDKs
+  pointer is emitted in apis.yml because no official client library exists to point at.
+probes:
+- {registry: npm, query: '75f', result: not found}
+- {registry: npm, query: '@75f/sdk', result: not found}
+- {registry: npm, query: haystack-75f, result: not found}
+- {registry: pypi, query: '75f', result: not found}
+- {registry: pypi, query: py75f, result: not found}
+third_party:
+  note: >-
+    Generic Project Haystack client libraries exist from the wider Haystack community (for example
+    j2inn/haystack-nclient) and would speak 75F's grid format, but they are not 75F software and are not
+    recorded as 75F packages.

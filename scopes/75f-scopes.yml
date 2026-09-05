@@ -1,0 +1,32 @@
+generated: '2026-09-05'
+method: searched
+source: https://support.75f.io/hc/en-us/articles/45325600917651-Special-Schedules-Via-API
+docs: https://support.75f.io/hc/en-us/articles/5459701361427-Oauth-API
+note: >-
+  75F publishes no public OpenAPI, so this was read from the provider's own documentation rather than
+  derived by 0-working/derive-oauth-scopes.py (which requires openapi/ files). The only named OAuth
+  scopes 75F documents are on the v2 Special Schedules API; the Project Haystack surface is authorized
+  by Facilisight site membership (Secondary Manager role) rather than by scope strings.
+schemes:
+- name: OAuth2ClientCredentials
+  source: https://support.75f.io/hc/en-us/articles/5459701361427-Oauth-API
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.75f.io/oauth/token
+scopes:
+- scope: schedules:read
+  description: Read special (exception-based) schedules for authorized zones and buildings.
+  flows: [clientCredentials]
+  apis: [75F Special Schedules API]
+  sources: [https://support.75f.io/hc/en-us/articles/45325600917651-Special-Schedules-Via-API]
+- scope: schedules:write
+  description: Create, update and delete special schedules for authorized zones and buildings.
+  flows: [clientCredentials]
+  apis: [75F Special Schedules API]
+  sources: [https://support.75f.io/hc/en-us/articles/45325600917651-Special-Schedules-Via-API]
+unscoped_surfaces:
+- api: 75F Haystack API
+  authorization: >-
+    No documented scope strings. Read/write separation is expressed as separate Azure APIM products
+    (Read API, Write API, Special Schedule API), each with its own subscription key, combined with the
+    caller's Facilisight site permissions.

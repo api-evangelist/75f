@@ -1,0 +1,71 @@
+generated: '2026-09-05'
+method: searched
+source: https://support.75f.io/hc/en-us/articles/5459701361427-Oauth-API
+docs: https://support.75f.io/hc/en-us/articles/5459584919059-External-Users-API-Developer-Portal
+note: >-
+  Derived from 75F's own published API documentation rather than from an OpenAPI file: 75F publishes no
+  public machine-readable spec. Two credentials are required on every call — a product-scoped Azure API
+  Management subscription key AND an OAuth 2.0 bearer token minted from Facilisight account credentials.
+summary:
+  types: [oauth2, http, apiKey]
+  api_key_in: [header]
+  oauth2_flows: [clientCredentials]
+  two_factor_credentials: true
+schemes:
+- name: ApimSubscriptionKey
+  type: apiKey
+  in: header
+  parameter_name: Ocp-Apim-Subscription-Key
+  required: true
+  description: >-
+    Product-scoped Azure API Management subscription key. Issued per product subscription in the 75F
+    developer portal, or read from Facilisight under Building Options > API Management. Missing or
+    invalid keys are rejected at the gateway with HTTP 401 and never reach the backend.
+  rotation:
+    supported: true
+    mechanism: two interchangeable keys per API category, rotated without downtime
+    source: https://support.75f.io/hc/en-us/articles/54874674979603-API-Management-Via-Facilisight-Application
+  key_categories:
+  - {name: Read API, purpose: retrieve information from the 75F platform}
+  - {name: Write API, purpose: modify or write information to the platform}
+  - {name: Special Schedule API, purpose: schedule-related operations}
+  sources: [https://support.75f.io/hc/en-us/articles/5460365803027-75F-API-s-Error-Returns]
+- name: OAuth2ClientCredentials
+  type: oauth2
+  required: true
+  description: >-
+    POST to the token endpoint with grant_type=client_credentials; client_id is the 75F Facilisight
+    username and client_secret is the Facilisight password. The account must be a standard
+    username/password Facilisight account — accounts federated to O365 or Google cannot be used from
+    the API. Returns a JWT access token, token_type bearer.
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.75f.io/oauth/token
+    scopes:
+      schedules:read: Read special schedules (v2 Scheduling API)
+      schedules:write: Create, update and delete special schedules (v2 Scheduling API)
+  token:
+    format: JWT
+    expires_in_seconds: 3600
+    header: 'Authorization: Bearer <token>'
+    note: >-
+      The docs state the token response carries expires_in 3600 while the client application
+      credentials themselves expire within 24 hours and require reactivation.
+  sources: [https://support.75f.io/hc/en-us/articles/5459701361427-Oauth-API]
+authorization_model:
+  description: >-
+    Data access is scoped by Facilisight site membership, not by API scopes. An API consumer must hold a
+    Facilisight "Secondary Manager" account on every site they intend to read or write; the site
+    administrator grants it. Requesting points the user is not entitled to returns HTTP 200 with an
+    empty Haystack grid rather than a 403.
+  role_required: Secondary Manager
+  granted_by: the customer's Facilisight account administrator
+  source: https://support.75f.io/hc/en-us/articles/5509604551443-Accessing-the-API
+onboarding:
+  steps:
+  - Register on the 75F developer portal (Azure API Management)
+  - Request a subscription to a published product; a 75F portal admin approves it
+  - Copy the subscription key from the portal profile page (or Facilisight > API Management > API Keys)
+  - Obtain a Facilisight Secondary Manager account for every site in scope
+  - POST client_credentials to /oauth/token to mint a bearer token
+  portal: https://api-management-75f-dev.developer.azure-api.net/

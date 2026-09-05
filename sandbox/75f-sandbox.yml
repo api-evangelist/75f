@@ -1,0 +1,60 @@
+generated: '2026-09-05'
+method: searched
+source: https://support.75f.io/hc/en-us/articles/54874674979603-API-Management-Via-Facilisight-Application
+note: >-
+  75F publishes no anonymous sandbox, no test credentials and no magic test values. What it does publish
+  are two authenticated try-it consoles and a set of named non-production gateway environments. Nothing
+  in this file is a credential or a fabricated test value; every value is a documented environment path.
+public_test_credentials: false
+test_values_published: false
+consoles:
+- name: Facilisight API Trial
+  url: https://fs.75f.io/
+  navigation: Building Options > API Management > API Trial
+  engine: Swagger UI over an OpenAPI 3.0 document
+  capabilities:
+  - explore available API endpoints
+  - review request and response schemas
+  - execute API requests and validate behaviour
+  access: >-
+    Requires an authenticated Facilisight session and the API Management add-on subscription. For an L1
+    integrator the subscription keys are pre-filled, so "Try It Out" runs without manual key entry.
+  gated: true
+- name: Azure API Management developer portal "Try it"
+  url: https://api-management-75f-dev.developer.azure-api.net/
+  engine: Azure API Management developer portal
+  capabilities:
+  - view request URL, headers, body and response for each published operation
+  - execute a call using a chosen product subscription key
+  access: >-
+    Requires portal registration plus an approved product subscription. The anonymous API listing on
+    this portal returns an empty set (probed 2026-09-05), so nothing is visible before approval.
+  gated: true
+environments:
+- name: production
+  gateway: https://api.75f.io
+  path_prefix: ''
+- name: staging
+  gateway: https://api.75f.io
+  path_prefix: /staging
+  example: https://api.75f.io/staging/ph/rw/pointWrite
+- name: qa
+  gateway: https://api-management-75f-dev.azure-api.net
+  path_prefix: /qa
+  example: https://api-management-75f-dev.azure-api.net/qa/ph/read?filter=site
+  note: >-
+    The documentation's worked examples are written against this development APIM instance. It is the
+    same tenant that serves the public developer portal.
+subscription_products:
+- {name: 'Product Production Readonly', environment: production, access: read}
+- {name: 'QA-Readonly', environment: qa, access: read}
+- {name: 'Staging Readwrite', environment: staging, access: read-write}
+simulators:
+- name: Temperature Mode Simulator
+  detail: >-
+    An interactive environment for validating temperature control configurations against current user
+    limits, desired temperatures, deadbands, offsets and conditioning modes before applying them to a
+    zone schedule. A product feature, not an API test harness, but it is the closest thing 75F ships to
+    a dry run for a write that changes building behaviour.
+  released: '2026-07-27'
+  source: https://support.75f.io/hc/en-us/articles/53825788018195-July-2026-Release

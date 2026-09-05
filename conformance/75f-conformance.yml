@@ -1,0 +1,116 @@
+generated: '2026-09-05'
+method: searched
+source: https://support.75f.io/hc/en-us/articles/5459129016595-75F-External-API-s-Overview
+note: >-
+  Read from 75F's own documentation and its published security page. No public OpenAPI exists, so no
+  entry here is inferred from a spec; each carries the docs URL that states it.
+standards:
+- id: project-haystack-3
+  name: Project Haystack 3.0
+  domain_standard: true
+  conforms: true
+  evidence: >-
+    The external API is a Project Haystack reference-style implementation. It exposes the Haystack ops
+    read, hisReadMany, pointWrite and hisWriteMany at /ph/*; requests are Haystack filter expressions
+    over Haystack tags; responses are Haystack grids declaring ver:"3.0" with cols[]/rows[], Ref ids
+    ("r:<uuid>"), marker tags ("m:") and unit-bearing values; ZINC is offered alongside JSON via
+    Accept: text/zinc. 75F joined the Project Haystack Organization as a member.
+  evidence_urls:
+  - https://support.75f.io/hc/en-us/articles/5460066903827-Read-API
+  - https://support.75f.io/hc/en-us/articles/6477813004691-Haystack-Filters-Queries
+  - https://www.75f.io/news/75f-joins-project-haystack-organization/
+  deviations:
+  - >-
+      pointWrite deviates from the Project Haystack specification in two documented ways: HTTP response
+      codes are used to signal success or failure rather than errors being confined to the HTTP layer,
+      and the resulting priority-array state is returned instead of an empty grid. Duration is not
+      limited to level 8.
+  deviation_source: https://support.75f.io/hc/en-us/articles/6012128424851-PointWrite-API
+- id: zinc
+  name: Haystack ZINC encoding
+  conforms: true
+  evidence: 'Accept: text/zinc returns ZINC-encoded grids; hisWriteMany responses are documented as text/zinc.'
+  evidence_urls: [https://support.75f.io/hc/en-us/articles/6011449449619-HisWrite-Many-API]
+- id: oauth2
+  name: OAuth 2.0
+  conforms: true
+  evidence: >-
+    client_credentials grant at https://api.75f.io/oauth/token returning a bearer JWT with expires_in.
+    75F describes the API as "an open API based on modern web standards" using OAuth 2.0.
+  evidence_urls: [https://support.75f.io/hc/en-us/articles/5459701361427-Oauth-API]
+  deviations:
+  - >-
+      The client_id and client_secret are a human Facilisight username and password rather than issued
+      machine client credentials, and a second credential (the APIM subscription key) is required
+      alongside the token.
+- id: oidc
+  name: OpenID Connect
+  conforms: false
+  evidence: No /.well-known/openid-configuration on any 75F host (probed 2026-09-05, all 404).
+- id: rfc9457-problem-details
+  name: RFC 9457 Problem Details
+  conforms: false
+  evidence: >-
+    Errors use an Azure APIM statusCode/message JSON object or a Haystack error grid; no
+    application/problem+json is returned anywhere in the published error reference.
+  evidence_urls: [https://support.75f.io/hc/en-us/articles/5460365803027-75F-API-s-Error-Returns]
+- id: rfc8594-sunset
+  name: RFC 8594 Sunset header
+  conforms: false
+  evidence: No deprecation policy or Sunset/Deprecation header support is published.
+- id: json-api
+  name: JSON:API
+  conforms: false
+  evidence: Responses are Haystack grids, not JSON:API documents.
+- id: openapi
+  name: OpenAPI
+  conforms: partial
+  evidence: >-
+    75F states the Facilisight API Trial console is "powered by Swagger using the OpenAPI Specification
+    3.0", so an OpenAPI 3.0 document exists behind the customer portal and the Azure APIM developer
+    portal. It is not published at any public URL — the anonymous APIM developer-portal API listing
+    returns an empty set, and every public spec path on api.75f.io returns 404.
+  evidence_urls:
+  - https://support.75f.io/hc/en-us/articles/54874674979603-API-Management-Via-Facilisight-Application
+  - https://support.75f.io/hc/en-us/articles/5460736536595-External-API-s-Glossary
+- id: bacnet
+  name: BACnet (ASHRAE 135) IP and MS/TP
+  domain_standard: true
+  conforms: true
+  evidence: >-
+    75F's Central Control Unit, HyperStat, HyperStat Split and MyStat devices operate as BACnet IP and
+    BACnet MS/TP servers and clients, with a published catalogue of the BACnet objects exposed by each
+    system and terminal profile.
+  evidence_urls:
+  - https://support.75f.io/hc/en-us/articles/48162706809107-BACnet-Objects-Exposed-as-Part-of-System-Terminal-Profiles
+  - https://support.75f.io/hc/en-us/articles/52827658499219-CCU-as-BACnet-IP-Server
+- id: modbus
+  name: Modbus
+  conforms: true
+  evidence: Published Modbus integration section covering wiring and general guidelines.
+  evidence_urls: [https://support.75f.io/hc/en-us/articles/4981834606099-Modbus-BACnet-Wiring-and-General-Guidelines]
+- id: niagara
+  name: Tridium Niagara driver
+  conforms: true
+  evidence: A 75F Niagara driver is documented as an integration path.
+  evidence_urls: [https://support.75f.io/hc/en-us/sections/25816551077011-Niagara-Driver]
+compliance:
+  published: true
+  page: https://www.75f.io/software/security/
+  certifications:
+  - id: soc2
+    name: SOC 2
+    claim: '"75F is proud to join the list of leading organizations that have achieved SOC 2 compliance."'
+    report_public: false
+  - id: vapt
+    name: VAPT (Vulnerability Assessment and Penetration Testing)
+    claim: 75F states its systems are VAPT certified.
+    report_public: false
+  frameworks:
+  - id: orange
+    name: O.R.A.N.G.E. security framework
+    claim: 75F's own named set of protocols for building control system security.
+  note: >-
+    Claims are read verbatim from 75F's public security page. No audit report, attestation letter or
+    third-party trust portal is published, so these are provider assertions rather than verified
+    artifacts.

@@ -1,0 +1,101 @@
+generated: '2026-09-05'
+method: searched
+source: https://support.75f.io/hc/en-us/articles/6477813004691-Haystack-Filters-Queries
+note: >-
+  75F publishes no OpenAPI, so this entity graph is not derived from schema $refs. It is read from the
+  provider's own documentation — the Haystack ref tags that appear verbatim in its published request
+  filters and response grids (siteRef, floorRef, roomRef, equipRef, tunerGroup) plus the response column
+  sets reproduced in the Read and PointWrite articles. Only relationships 75F's own examples show are
+  recorded; the wider Project Haystack ontology is not imported.
+standard: Project Haystack 3.0
+identifier_scheme:
+  request_form: '@<uuid>'
+  response_form: 'r:<uuid>'
+  detail: >-
+    Entities are UUID Refs. In a request filter or an id list they are written with a leading @; in a
+    JSON response grid the same id is serialized as the string "r:<uuid>". Marker tags serialize as "m:".
+    There are no type-prefixed ids — a Ref does not tell a client what kind of entity it points at, so
+    entity type must be read from the marker tags on the row.
+entities:
+- name: site
+  markers: [site]
+  description: A building. The top of the containment hierarchy and the unit of API authorization.
+- name: floor
+  markers: [floor]
+  description: A floor within a site.
+- name: room
+  markers: [room]
+  description: A room within a floor.
+- name: zone
+  markers: [zone]
+  description: A conditioned zone; the unit that special schedules and setpoints are applied to.
+- name: equip
+  markers: [equip]
+  description: A piece of equipment — VAV terminal, CCU system, chiller plant, air handler.
+- name: point
+  markers: [point]
+  description: >-
+    A single datum on an equipment. Carries kind, unit and tz, and the marker tags that classify it
+    (sensor, sp, cmd, cur, his, writable, temp, co2, air, damper, config).
+- name: specialSchedule
+  markers: []
+  description: >-
+    An exception-based schedule on a zone or building, addressed by scheduleId on the v2 REST surface
+    rather than by a Haystack Ref. It is the one documented 75F entity that is not a Haystack record.
+relationships:
+- {from: floor, to: site, type: belongs_to, via: siteRef}
+- {from: room, to: floor, type: belongs_to, via: floorRef}
+- {from: zone, to: room, type: belongs_to, via: roomRef}
+- {from: equip, to: site, type: belongs_to, via: siteRef}
+- {from: point, to: equip, type: belongs_to, via: equipRef}
+- {from: point, to: room, type: belongs_to, via: roomRef}
+- {from: point, to: floor, type: belongs_to, via: floorRef}
+- {from: point, to: site, type: belongs_to, via: siteRef}
+- {from: site, to: point, type: has_many, via: siteRef}
+- {from: equip, to: point, type: has_many, via: equipRef}
+- {from: point, to: tuner, type: belongs_to, via: tunerGroup}
+- {from: specialSchedule, to: zone, type: belongs_to, via: zoneId}
+point_attributes:
+  observed_columns:
+  - id
+  - dis
+  - kind
+  - unit
+  - tz
+  - curVal
+  - cur
+  - his
+  - hisInterpolate
+  - point
+  - sensor
+  - sp
+  - writable
+  - minVal
+  - maxVal
+  - incrementVal
+  - threshold
+  - group
+  - series
+  - parallel
+  - logical
+  - data
+  source: >-
+    Column sets reproduced verbatim in the 75F Read API and PointWrite API response examples.
+  note: >-
+    `writable` is the load-bearing tag for any agent or integration: only points carrying it can be
+    written, and 75F states that relays, analog outputs and direct physical components are not
+    addressable at all.
+write_semantics:
+  model: Haystack priority array
+  detail: >-
+    A pointWrite lands at a numbered priority level and the response returns the resulting array
+    (duration, level, val, who) rather than an empty grid, so a caller can see which level it now
+    occupies and who else holds a higher one. The `who` column identifies the writer — a CCU writes as
+    "ccu_@<uuid>", an API caller as "api_<name>".
+  source: https://support.75f.io/hc/en-us/articles/6012128424851-PointWrite-API
+history:
+  detail: >-
+    Points tagged `his` are historized. hisReadMany returns timestamp/value pairs with grid metadata
+    carrying id, hisStart and hisEnd; ranges are inclusive of the start and exclusive of the end and are
+    evaluated in the point's own configured timezone, converting if the caller names a different one.
+  source: https://support.75f.io/hc/en-us/articles/5460179115923-HisReadMany-API

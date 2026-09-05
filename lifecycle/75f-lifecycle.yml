@@ -1,0 +1,72 @@
+generated: '2026-09-05'
+method: searched
+source: https://support.75f.io/hc/en-us/articles/5459129016595-75F-External-API-s-Overview
+versioning:
+  scheme: uri-path
+  current: 'Haystack surface: unversioned (/ph); Special Schedules: v2'
+  policy: >-
+    75F states it "aims to be backward compatible with previous versions of the API and to protect
+    implementations from breaking when new features or changes are implemented." That is a stated intent
+    rather than a dated support policy; no version-support matrix or end-of-life calendar is published.
+  docs: https://support.75f.io/hc/en-us/articles/5459129016595-75F-External-API-s-Overview
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation policy, no RFC 8594 Sunset/Deprecation header support and no advance-notice window
+    are published. No Deprecation pointer is emitted in apis.yml, because 75F publishes no such policy.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA or uptime commitment. Availability is reported after the fact on the status page,
+    which is subscribable but publishes no target.
+status_page:
+  url: https://75f.statuspage.io/
+  provider: Atlassian Statuspage
+  machine_readable: https://75f.statuspage.io/api/v2/summary.json
+  probed: '2026-09-05'
+  http_status: 200
+  indicator_at_probe: none — All Systems Operational
+  note: >-
+    Unusually granular for this sector: the page decomposes the platform into 21 named services and
+    several are API surfaces in their own right, which is the clearest public statement 75F makes about
+    how its API estate is partitioned.
+  components:
+  - {name: Haystack API, description: Digital twin and historian API}
+  - {name: External API}
+  - {name: Scheduling API}
+  - {name: Messaging API}
+  - {name: Summary Table API}
+  - {name: Point Summary API}
+  - {name: Notes API}
+  - {name: External Service API, description: subscription-management app service}
+  - {name: Gatekeeper Service}
+  - {name: Caretaker Service, description: authorization service for users and sites}
+  - {name: User Management}
+  - {name: Site Manager}
+  - {name: Domain Modeler}
+  - {name: Portfolio Analytics}
+  - {name: Alerts Service}
+  - {name: Alert Builder Service}
+  - {name: Chiller Plant Service}
+  - {name: Sequence Runner Service}
+  - {name: Version Management Service}
+  - {name: Weather Data Service}
+  - {name: Remote Access}
+release_cadence:
+  cadence: monthly
+  detail: Dated monthly release notes published in the help center since 2022.
+  artifact: changelog/75f-changelog.yml
+deprecated_operations: []
+corporate:
+  acquisition:
+    acquirer: Carrier Global Corporation
+    announced: '2026-07-23'
+    business_unit: Carrier Software & Controls Solutions
+    source: https://www.75f.io/news/carrier-acquisition-of-75f/
+    note: >-
+      Recorded because it is the most likely near-term source of change to this API's lifecycle. As of
+      this probe the 75F developer surface, gateway host and documentation are unchanged and Carrier
+      states there are no immediate changes for customers or partners.
