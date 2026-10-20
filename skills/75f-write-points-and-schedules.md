@@ -1,5 +1,6 @@
 ---
-name: Change 75F building behaviour — point writes and special schedules
+name: write-points-and-schedules
+title: "Change 75F building behaviour — point writes and special schedules"
 description: >-
   Override a writable point or create an exception-based schedule on a 75F-controlled building, with the
   authorization, priority-array and reversal rules that make the change safe to undo.

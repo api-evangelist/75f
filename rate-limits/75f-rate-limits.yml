@@ -1,6 +1,7 @@
 generated: '2026-09-05'
 method: searched
 source: https://support.75f.io/hc/en-us/sections/5484889695123-API-s-for-Integrations
+name: 75F API Rate Limits
 limit_count: 0
 note: >-
   75F publishes no numeric rate limit, quota or throttle for any API. A keyword sweep of all 591 public

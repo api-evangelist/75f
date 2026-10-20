@@ -1,3 +1,23 @@
+generated: '2026-10-20'
+method: searched
+source:
+- https://www.bacnetinternational.net/btl/
+- https://www.knx.org/community/manufacturers
+- https://zapier.com/apps/75f/integrations
+- https://n8n.io/integrations/75f/
+- https://composio.dev/toolkits/75f
+- https://monid.ai/tools/75f
+checked:
+- https://brickschema.org/consortium/
+- https://marketing.project-haystack.org/about-us
+- https://www.bacnetinternational.net/btl/
+- https://www.knx.org/community/manufacturers
+- https://composio.dev/toolkits/75f
+- https://monid.ai/tools/75f
+- https://n8n.io/integrations/75f/
+- https://zapier.com/apps/75f/integrations
+summary: null
+marketplace_apps: []
 edges:
 - partner_name: BACnet Testing Laboratories (BTL Listed)
   partner: null
@@ -28,7 +48,7 @@ edges:
       type); product names are context, never a count; current listing only (archives.php superseded listings not
       read)
     detected_by: sweep-building-automation.py
-    detected: '2026-10-15'
+    detected: '2026-10-19'
   detected_by: sweep-building-automation.py
   first_seen: '2026-10-15'
 - partner_name: BACnet Testing Laboratories (BTL Listed)
@@ -52,7 +72,7 @@ edges:
     registered_name: 75F
     matched_domain: 75f.io
     detected_by: sweep-building-automation.py
-    detected: '2026-10-15'
+    detected: '2026-10-19'
   detected_by: sweep-building-automation.py
   first_seen: '2026-10-15'
 - partner_name: Project Haystack (members)
@@ -75,16 +95,7 @@ edges:
     matched_by: domain
     signal_note: 'participation only: membership level is context'
     detected_by: sweep-building-automation.py
-    detected: '2026-10-15'
+    detected: '2026-10-19'
   detected_by: sweep-building-automation.py
   first_seen: '2026-10-15'
-generated: '2026-10-15'
-method: searched
-source:
-- https://www.bacnetinternational.net/btl/
-- https://www.knx.org/community/manufacturers
-checked:
-- https://brickschema.org/consortium/
-- https://marketing.project-haystack.org/about-us
-- https://www.bacnetinternational.net/btl/
-- https://www.knx.org/community/manufacturers
+templates: []

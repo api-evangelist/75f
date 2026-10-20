@@ -1,0 +1,88 @@
+generated: '2026-10-20'
+method: probed
+source: pre-flight dossier (docs platform, portal detections) + CNAME chains and response headers of the hosts apis.yml names
+registry: all/0-working/vendors.yml
+areas_vocabulary:
+- documentation
+- developer-portal
+- api-gateway
+- cdn
+- hosting
+- sdk-generation
+- api-collections
+- status-page
+- support
+- community
+- identity
+- mcp-hosting
+vendors:
+- vendor: azure-apim
+  name: Azure API Management
+  area: api-gateway
+  host: api.75f.io
+  evidence: cname:azure-api.net
+  signal: cname
+  confidence: high
+  kin_score:
+  - openapi_published
+  - developer_portal
+- vendor: cloudflare
+  name: Cloudflare
+  area: cdn
+  host: support.75f.io
+  evidence: header:cf-ray
+  signal: header
+  confidence: high
+  kin_score:
+  - https_enforced
+  - hsts
+- vendor: netlify
+  name: Netlify
+  area: hosting
+  host: www.75f.io
+  evidence: cname:netlify.app
+  signal: cname
+  confidence: high
+  kin_score: []
+- vendor: statuspage
+  name: Atlassian Statuspage
+  area: status-page
+  host: 75f.statuspage.io
+  evidence: https://75f.statuspage.io/
+  signal: url:statuspage.io
+  confidence: high
+  kin_score:
+  - status_page
+- vendor: zendesk
+  name: Zendesk
+  area: support
+  host: support.75f.io
+  evidence: cname:zendesk.com
+  signal: cname
+  confidence: high
+  kin_score:
+  - support_channel
+reliance:
+  areas_vendor_served:
+  - api-gateway
+  - cdn
+  - hosting
+  - status-page
+  - support
+  vendor_count: 5
+  areas_observed: 12
+  share_of_observable_areas: 0.417
+  note: areas where a third party was DETECTED serving this provider; an area absent here was either self-run or not observed, and this script
+    cannot tell those apart
+checked:
+- 'docs-platform: custom'
+- www.75f.io (Website)
+- api-management-75f-dev.developer.azure-api.net (DeveloperPortal)
+- support.75f.io (Documentation)
+- support.75f.io (APIReference)
+- support.75f.io (GettingStarted)
+- support.75f.io (Support)
+- api-management-75f-dev.developer.azure-api.net (SignUp)
+- fs.75f.io (Login)
+- 75f.statuspage.io (StatusPage)
+- api.75f.io (baseURL)

@@ -1,5 +1,6 @@
 ---
-name: Read 75F building data over the Haystack API
+name: read-building-data
+title: "Read 75F building data over the Haystack API"
 description: >-
   Authenticate against the 75F platform and pull live and historical building data — zone temperatures,
   CO2, setpoints, equipment state — out of a Project Haystack-tagged model, without writing anything.

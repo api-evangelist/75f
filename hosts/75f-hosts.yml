@@ -1,0 +1,148 @@
+generated: '2026-10-20'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 10
+  own: 4
+  other_domain: 6
+  platform: 0
+  roles:
+  - api
+  - docs
+  - identity
+  - legal
+  - portal
+  - status
+  - website
+hosts:
+- host: 75f.statuspage.io
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  - vendor-detect
+  types:
+  - StatusPage
+  serves:
+  - status-page
+  vendor: statuspage
+  registrable_domain: statuspage.io
+  role: status
+  relation: other-domain
+- host: api-management-75f-dev.developer.azure-api.net
+  found_by:
+  - pointer
+  - probed
+  - docs-index
+  - well-known
+  types:
+  - DeveloperPortal
+  - SignUp
+  serves:
+  - docs
+  registrable_domain: azure-api.net
+  role: portal
+  relation: other-domain
+- host: api.75f.io
+  found_by:
+  - apis[]
+  - probed
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types: []
+  serves:
+  - api
+  - api-gateway
+  vendor: azure-apim
+  registrable_domain: 75f.io
+  role: api
+  relation: own
+- host: api.azure-api.net
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: azure-api.net
+  role: api
+  relation: other-domain
+- host: api.datocms-assets.com
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: datocms-assets.com
+  role: api
+  relation: other-domain
+- host: api.statuspage.io
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: statuspage.io
+  role: api
+  relation: other-domain
+- host: fs.75f.io
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  types:
+  - Login
+  serves: []
+  registrable_domain: 75f.io
+  role: identity
+  relation: own
+- host: support.75f.io
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - site-links
+  - docs-index
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - Documentation
+  - APIReference
+  - GettingStarted
+  - Support
+  - ChangeLog
+  serves:
+  - docs
+  - cdn
+  - support
+  vendor: cloudflare
+  registrable_domain: 75f.io
+  role: docs
+  relation: own
+- host: www.75f.io
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  - vendor-detect
+  types:
+  - Website
+  - Blog
+  - Compliance
+  serves:
+  - hosting
+  vendor: netlify
+  registrable_domain: 75f.io
+  role: website
+  relation: own
+- host: www.datocms-assets.com
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  types:
+  - TermsOfService
+  - PrivacyPolicy
+  serves: []
+  registrable_domain: datocms-assets.com
+  role: legal
+  relation: other-domain
