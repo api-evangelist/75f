@@ -64,14 +64,121 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-75F is an IoT-based building management and automation company (Burnsville, Minnesota; acquired by Carrier Global in July 2026). Its platform pairs wireless sensors, thermostats and Central Control Units with cloud software — Facilisight, Portfolio Analytics, Hayloft and Saffron AI — to control and optimize HVAC, lighting and equipment in commercial buildings.
+75F is an IoT-based building management and automation company (Burnsville, Minnesota; acquired by Carrier Global in July 2026) whose vertically integrated platform pairs wireless sensors, thermostats and Central Control Units with cloud software — Facilisight, Portfolio Analytics, Hayloft and Saffron AI — to control and optimize HVAC, lighting and equipment in commercial buildings. Its developer surface is a Project Haystack-compliant REST API published through an Azure API Management gateway at api.75f.io, exposing Haystack ops (read, hisReadMany, pointWrite, hisWriteMany) over Haystack-tagged JSON and ZINC grids, plus a v2 Special Schedules API for exception-based scheduling. Access is OAuth 2.0 client-credentials bearer tokens layered on a product-scoped APIM subscription key, and integrators also reach the system over BACnet IP/MS-TP, Modbus and a Niagara driver.
 
-The developer surface is a Project Haystack 3.0 REST API behind an Azure API Management gateway at `api.75f.io` (Haystack `read`, `hisReadMany`, `pointWrite`, `hisWriteMany` over JSON or ZINC grids), plus a versioned `v2` Special Schedules API for exception-based occupancy overrides. Access requires two credentials — a product-scoped APIM subscription key and an OAuth 2.0 client-credentials bearer token — plus a Facilisight *Secondary Manager* grant on every site in scope. Integrators also reach the system over BACnet IP/MS-TP, Modbus and a Tridium Niagara driver.
+**Areas:** Company · Building Automation · Smart Buildings · HVAC · IoT · Energy Management · Project Haystack · Facilities Management · Sensors · Building Management System
 
-75F documents this API thoroughly in prose but publishes **no public machine-readable contract**: the OpenAPI 3.0 document behind the Facilisight API Trial and the APIM developer portal is reachable only after portal registration and product-subscription approval.
+## 75F on APIs.io
 
-- Website: https://www.75f.io/
-- API overview: https://www.75f.io/software/api/
-- API documentation: https://support.75f.io/hc/en-us/sections/5484889695123-API-s-for-Integrations
-- Developer portal: https://api-management-75f-dev.developer.azure-api.net/
-- Status: https://75f.statuspage.io/
+Everything profiled for 75F is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/75f/](https://apis.io/providers/75f/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [75F Haystack API](https://apis.io/apis/75f/75f-haystack-api/) — 75F's Project Haystack-compliant external REST API. Reads Haystack entity records by filter or by id (read), reads time-series history for many points at…
+- [75F Special Schedules API](https://apis.io/apis/75f/75f-special-schedules-api/) — A v2 REST API for exception-based ("special") schedules applied at building or zone level — create, update and delete date-bounded occupancy overrides with…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [75f](https://apis.io/servers/75f/75f/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [75F Authentication](https://apis.io/security/75f/75f-authentication/)
+- [75F Domain Security](https://apis.io/security/75f/75f-domain-security/)
+- [75F Trust Center](https://apis.io/security/75f/75f-trust-center/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [75F Scopes](https://apis.io/scopes/75f/75f-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [75F Plans Pricing](https://apis.io/plans/75f/75f-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [75F Rate Limits](https://apis.io/rate-limits/75f/75f-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.75f.io/)
+- [Documentation](https://support.75f.io/hc/en-us/sections/5484889695123-API-s-for-Integrations)
+- [Getting started](https://support.75f.io/hc/en-us/articles/5509604551443-Accessing-the-API)
+- [API reference](https://support.75f.io/hc/en-us/articles/5459129016595-75F-External-API-s-Overview)
+- [Sign up](https://api-management-75f-dev.developer.azure-api.net/)
+- [Support](https://support.75f.io/hc/en-us)
+- [Changelog](https://support.75f.io/hc/en-us/categories/11037028410771-Feature-Release-History)
+- [Blog](https://www.75f.io/news/)
+- [Compliance](https://www.75f.io/software/security/)
+- [Terms of service](https://www.datocms-assets.com/55631/1648491708-75f-terms-of-service-pdf-2022.pdf)
+- [Privacy policy](https://www.datocms-assets.com/55631/1650987646-75f-website-privacy-notice-march-2022.pdf)
+- [Status](https://75f.statuspage.io/)
+
+## API Evangelist rating
+
+**Kin Score 39.9** — developing · rubric 0.24.0 · scored 2026-10-20
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 31.6 |
+| Developer ergonomics | 66.1 |
+| Access clarity | 50.0 |
+
+**Agent readiness 8.8** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 38.5** — Energy & Utilities
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/75f/](https://apis.io/providers/75f/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for 75F: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/75f/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
