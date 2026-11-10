@@ -72,10 +72,11 @@
 
 Everything profiled for 75F is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/75f/](https://apis.io/providers/75f/)** — or go straight to one of the APIs or properties below.
 
-### APIs (2)
+### APIs (3)
 
 - [75F Haystack API](https://apis.io/apis/75f/75f-haystack-api/) — 75F's Project Haystack-compliant external REST API. Reads Haystack entity records by filter or by id (read), reads time-series history for many points at…
 - [75F Special Schedules API](https://apis.io/apis/75f/75f-special-schedules-api/) — A v2 REST API for exception-based ("special") schedules applied at building or zone level — create, update and delete date-bounded occupancy overrides with…
+- [75F API](https://apis.io/apis/75f/75f-api/) — 75F API as documented publicly: 1 operations. Contract generated from the documentation by API Evangelist (2026-11-09); not the provider's own document.
 
 ### Published properties
 
@@ -86,6 +87,25 @@ Each property below is a page on APIs.io carrying the machine-readable artifact 
 Model Context Protocol servers that expose the API to agents.
 
 - [75f](https://apis.io/servers/75f/75f/)
+
+#### JSON Schema (2)
+
+The data models the API reads and writes.
+
+- [PostOauthTokenRequest](https://apis.io/schemas/75f/75f-post-oauth-token-request/)
+- [PostOauthTokenResponse](https://apis.io/schemas/75f/75f-post-oauth-token-response/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [75F Context](https://apis.io/jsonld/75f/75f-context/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [75F API Rules](https://apis.io/rules/75f/75f-rules/)
 
 #### Security (3)
 
