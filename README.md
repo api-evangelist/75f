@@ -82,11 +82,12 @@ Everything profiled for 75F is published on APIs.io rather than in this reposito
 
 Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-#### MCP servers (1)
+#### MCP servers (2)
 
 Model Context Protocol servers that expose the API to agents.
 
-- [75f](https://apis.io/servers/75f/75f/)
+- [Moved to /providers/75f/](https://apis.io/servers/75f/75f/)
+- [75f-mcp.yml](https://apis.io/servers/75f/75f-mcp-yml/)
 
 #### JSON Schema (2)
 
@@ -152,22 +153,22 @@ Links to the company's own pages. This repository publishes no copy of their spe
 
 ## API Evangelist rating
 
-**Kin Score 39.9** — developing · rubric 0.25.0 · scored 2026-10-23
+**Kin Score 48.7** — developing · rubric 0.28.1 · scored 2026-11-21
 
 | Facet | Score |
 |---|---|
-| Discoverability | 66.1 |
-| Contract quality | 0.0 |
-| Contract governance | 18.2 |
-| Operational transparency | 31.6 |
+| Discoverability | 71.4 |
+| Contract quality | 22.4 |
+| Contract governance | 35.6 |
+| Operational transparency | 28.6 |
 | Developer ergonomics | 66.1 |
-| Access clarity | 50.0 |
+| Access clarity | 55.3 |
 
-**Agent readiness 8.8** — agent-aware
+**Agent readiness 21.3** — agent-aware
 
 | Agent-readiness dimension | Result |
 |---|---|
-| Spec Presence | — |
+| Spec Presence | yes |
 | Agentic Access | — |
 | Reversibility Documented | — |
 | MCP Server | — |
@@ -188,8 +189,12 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Agentic Commerce | — |
 | Pagination Ratio | na |
 | Operation Distinctiveness | na |
+| MCP Tool Quality | na |
+| Onboarding Descriptor | — |
+| Dns Aid Index | na |
+| Markdown Negotiation | na |
 
-**Regulatory alignment 38.5** — Energy & Utilities
+**Regulatory alignment 37.7** — Energy & Utilities
 
 The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/75f/](https://apis.io/providers/75f/).
 
